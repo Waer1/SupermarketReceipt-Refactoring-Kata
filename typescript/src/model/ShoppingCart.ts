@@ -70,8 +70,13 @@ export class ShoppingCart {
                 } if (offer.offerType == SpecialOfferType.FiveForAmount) {
                     x = 5;
                 }
+
+                // above part is responsible for getting X which is the required number of item you need to get to have a discount
+
+
                 const numberOfXs = Math.floor(quantityAsInt / x);
                 if (offer.offerType == SpecialOfferType.ThreeForTwo && quantityAsInt > 2) {
+                    // this is for each 3 items discountAmount is the price of the 1 of them 
                     const discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantityAsInt % 3 * unitPrice);
                     discount = new Discount(product, "3 for 2", discountAmount);
                 }
@@ -82,6 +87,9 @@ export class ShoppingCart {
                     const discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantityAsInt % 5 * unitPrice);
                     discount = new Discount(product, x + " for " + offer.argument, discountTotal);
                 }
+
+                // above part is responsible for getting the discount amount 
+
                 if (discount != null)
                     receipt.addDiscount(discount);
             }
