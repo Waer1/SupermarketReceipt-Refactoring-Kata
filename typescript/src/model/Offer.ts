@@ -4,11 +4,12 @@ import { FiveForAmountOffer } from "./discountStrategies/FiveForAmountOffer";
 import { TenPercentDiscountOffer } from "./discountStrategies/TenPercentDiscountOffer";
 import { ThreeForTwoOffer } from "./discountStrategies/ThreeForTwoOffer";
 import { TwoForAmountOffer } from "./discountStrategies/TwoForAmountOffer";
+import { IOffer } from "./IOffer";
 import { PricedProductQuantity } from "./PricedProductQuantity";
 import { Product } from "./Product"
 import { SpecialOfferType } from "./SpecialOfferType"
 
-export class Offer {
+export class Offer implements IOffer {
 
     public constructor(public readonly offerType: SpecialOfferType,
         public readonly product: Product,
