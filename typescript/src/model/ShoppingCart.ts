@@ -55,10 +55,9 @@ export class ShoppingCart {
 
         // Process offers
         for (const productName in this.productQuantities()) {
-            const pricedProductQuantity = allPricedProducts[productName];
             const offer : IOffer = offers[productName];
             if (offer) {
-                const discount = offer.getAvailableDiscount(pricedProductQuantity, allPricedProducts);
+                const discount = offer.getAvailableDiscount(allPricedProducts);
                 if (discount != null) receipt.addDiscount(discount);
             }
         }

@@ -5,7 +5,6 @@ import { TenPercentDiscountOffer } from "./discountStrategies/TenPercentDiscount
 import { ThreeForTwoOffer } from "./discountStrategies/ThreeForTwoOffer";
 import { TwoForAmountOffer } from "./discountStrategies/TwoForAmountOffer";
 import { IOffer, PricedProductQuantityMap } from "./IOffer";
-import { PricedProductQuantity } from "./PricedProductQuantity";
 import { Product } from "./Product"
 import { SpecialOfferType } from "./SpecialOfferType"
 
@@ -34,7 +33,7 @@ export class Offer implements IOffer {
         }
     }
 
-    getAvailableDiscount(_pricedProductQuantity: PricedProductQuantity, allProducts: PricedProductQuantityMap): Discount | null {
+    getAvailableDiscount(allProducts: PricedProductQuantityMap): Discount | null {
         const pricedProductQuantity = allProducts[this.product.name];
 
         const discountStrategy = this.getDiscountStrategy();
