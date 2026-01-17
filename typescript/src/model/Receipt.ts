@@ -1,4 +1,5 @@
 import {Discount} from "./Discount"
+import { PricedProductQuantity } from "./PricedProductQuantity";
 import {Product} from "./Product"
 import {ReceiptItem} from "./ReceiptItem"
 import * as _ from "lodash"
@@ -18,7 +19,7 @@ export class Receipt {
         return total;
     }
 
-    public addProduct( p: Product, quantity: number, price: number, totalPrice: number): void {
+    public addProduct( p: Product, quantity: number, price: number, totalPrice: number, pricedProductQuantity: PricedProductQuantity): void {
         this.items.push(new ReceiptItem(p, quantity, price, totalPrice));
     }
 

@@ -4,6 +4,7 @@ import {Product} from "./Product"
 import {Receipt} from "./Receipt"
 import {Offer} from "./Offer"
 import {SpecialOfferType} from "./SpecialOfferType"
+import { PricedProductQuantity } from "./PricedProductQuantity"
 
 export class Teller {
 
@@ -24,7 +25,8 @@ export class Teller {
             let quantity = pq.quantity;
             let unitPrice = this.catalog.getUnitPrice(p);
             let price = quantity * unitPrice;
-            receipt.addProduct(p, quantity, unitPrice, price);
+            let pricedProductQuantity = new PricedProductQuantity(pq, unitPrice);
+            receipt.addProduct(p, quantity, unitPrice, price, pricedProductQuantity);
         }
         theCart.handleOffers(receipt, this.offers, this.catalog);
 
