@@ -51,7 +51,6 @@ export class ShoppingCart {
         for (const productName in this.productQuantities()) {
             const productQuantity = this._productQuantities[productName]
             const product = productQuantity.product;
-            const quantity: number = this._productQuantities[productName].quantity;
             const pricedProductQuantity = new PricedProductQuantity(productQuantity, catalog.getUnitPrice(product));
             if (offers[productName]) {
                 const offer : Offer = offers[productName];
