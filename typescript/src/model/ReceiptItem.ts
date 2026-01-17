@@ -14,11 +14,11 @@ export class ReceiptItem {
 
 
     getFormatedTotalPrice(): string {
-        return this.format2Decimals(this.totalPrice);
+        return ReceiptPrinter.format2Decimals(this.totalPrice);
     }
 
     getFormatedUnitPrice(): string {
-        return this.format2Decimals(this.price);
+        return ReceiptPrinter.format2Decimals(this.price);
     }
 
     getWhitespaceSize(columns: number): number {
@@ -32,13 +32,6 @@ export class ReceiptItem {
             line += "  " + this.getFormatedUnitPrice() + " * " + this.getFormatedQuantity() + this.EOL;
         }
         return line;
-    }
-
-    format2Decimals(number: number) {
-        return new Intl.NumberFormat('en-UK', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }).format(number)
     }
 
     getFormatedQuantity(): string  {

@@ -1,6 +1,7 @@
 import {ProductUnit} from "./model/ProductUnit"
 import {ReceiptItem} from "./model/ReceiptItem"
 import {Receipt} from "./model/Receipt"
+import { ReceiptDiscount } from "./model/ReceiptDiscount";
 
 export class ReceiptPrinter {
 
@@ -17,8 +18,10 @@ export class ReceiptPrinter {
 
         
         for (const discount of receipt.getDiscounts()) {
+            const receiptDiscount = new ReceiptDiscount(discount);
+
             let productPresentation = discount.product.name;
-            let pricePresentation = this.format2Decimals(discount.discountAmount);
+            let pricePresentation = ReceiptPrinter.format2Decimals(discount.discountAmount);
             let description = discount.description;
             result += description;
             result += "(";
@@ -30,7 +33,7 @@ export class ReceiptPrinter {
             result += this.EOL;
         }
         result += this.EOL;
-        let pricePresentation = this.format2Decimals(receipt.getTotalPrice());
+        let pricePresentation = ReceiptPrinter.format2Decimals(receipt.getTotalPrice());
         let total = "Total: ";
         let whitespace = ReceiptPrinter.getWhitespace(this.columns - total.length - pricePresentation.length);
         result += total;
@@ -40,12 +43,13 @@ export class ReceiptPrinter {
         return result;
     }
 
-    private format2Decimals(number: number) {
+    static format2Decimals(number: number) {
         return new Intl.NumberFormat('en-UK', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         }).format(number)
     }
+    
 
     private static presentQuantity( item: ReceiptItem): string  {
         return ProductUnit.Each == item.product.unit
