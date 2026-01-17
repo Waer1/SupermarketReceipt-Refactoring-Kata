@@ -3,7 +3,7 @@ import {SupermarketCatalog} from "./SupermarketCatalog"
 import * as _ from "lodash"
 import {ProductQuantity} from "./ProductQuantity"
 import {Receipt} from "./Receipt"
-import {IOffer} from "./IOffer"
+import {IOffer, PricedProductQuantityMap} from "./IOffer"
 import { PricedProductQuantity } from "./PricedProductQuantity"
 
 type ProductQuantities = { [productName: string]: ProductQuantity }
@@ -46,15 +46,21 @@ export class ShoppingCart {
 
 
     handleOffers(receipt: Receipt,  offers: OffersByProduct, catalog: SupermarketCatalog ):void {
+        // Build map of all priced products (needed for bundle offers)
+        const allPricedProducts: PricedProductQuantityMap = {};
         for (const productName in this.productQuantities()) {
-            const productQuantity = this._productQuantities[productName]
-            const pricedProductQuantity = new PricedProductQuantity(productQuantity, catalog.getUnitPrice(productQuantity.product));
+            const productQuantity = this._productQuantities[productName];
+            allPricedProducts[productName] = new PricedProductQuantity(productQuantity, catalog.getUnitPrice(productQuantity.product));
+        }
+
+        // Process offers
+        for (const productName in this.productQuantities()) {
+            const pricedProductQuantity = allPricedProducts[productName];
             const offer : IOffer = offers[productName];
             if (offer) {
-                const discount = offer.getAvailableDiscount(pricedProductQuantity)
+                const discount = offer.getAvailableDiscount(pricedProductQuantity, allPricedProducts);
                 if (discount != null) receipt.addDiscount(discount);
             }
-
         }
     }
 }
