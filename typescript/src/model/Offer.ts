@@ -7,7 +7,6 @@ import { TwoForAmountOffer } from "./discountStrategies/TwoForAmountOffer";
 import { PricedProductQuantity } from "./PricedProductQuantity";
 import { Product } from "./Product"
 import { SpecialOfferType } from "./SpecialOfferType"
-import { SupermarketCatalog } from "./SupermarketCatalog";
 
 export class Offer {
 
