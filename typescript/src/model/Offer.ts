@@ -12,4 +12,18 @@ export class Offer {
         return this.product;
     }
 
+    getRequiredQuantityForDiscount(): number {
+            if (this.offerType == SpecialOfferType.ThreeForTwo) {
+                return 3;
+            } else if (this.offerType == SpecialOfferType.TwoForAmount) {
+                return 2;
+            } else if (this.offerType == SpecialOfferType.FiveForAmount) {
+                return 5;
+            } else if (this.offerType == SpecialOfferType.TenPercentDiscount) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
 }

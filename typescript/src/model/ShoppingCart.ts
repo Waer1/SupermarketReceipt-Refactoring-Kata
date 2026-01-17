@@ -46,24 +46,9 @@ export class ShoppingCart {
     }
 
 
-    private getRequiredQuantityForDiscount(offer: Offer): number {
-        if (offer.offerType == SpecialOfferType.ThreeForTwo) {
-            return 3;
-        } else if (offer.offerType == SpecialOfferType.TwoForAmount) {
-            return 2;
-        } else if (offer.offerType == SpecialOfferType.FiveForAmount) {
-            return 5;
-        } else if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-
     private getAvailableDiscount(offer: Offer, quantity: number, product: Product, catalog: SupermarketCatalog) {
         const unitPrice: number= catalog.getUnitPrice(product);
-        const x = this.getRequiredQuantityForDiscount(offer);
+        const x = offer.getRequiredQuantityForDiscount();
         const numberOfXs = Math.floor(quantity / x);
 
         if (offer.offerType == SpecialOfferType.ThreeForTwo && quantity > 2) {
