@@ -2,6 +2,7 @@ import { Discount } from "./Discount";
 import { DiscountStrategy } from "./discountStrategies/DiscountStrategy";
 import { TenPercentDiscountOffer } from "./discountStrategies/TenPercentDiscountOffer";
 import { ThreeForTwoOffer } from "./discountStrategies/ThreeForTwoOffer";
+import { TwoForAmountOffer } from "./discountStrategies/TwoForAmountOffer";
 import { PricedProductQuantity } from "./PricedProductQuantity";
 import { Product } from "./Product"
 import { SpecialOfferType } from "./SpecialOfferType"
@@ -37,6 +38,8 @@ export class Offer {
             return new ThreeForTwoOffer();
         } else if (this.offerType == SpecialOfferType.TenPercentDiscount) {
             return new TenPercentDiscountOffer(this.argument);
+        } else if (this.offerType == SpecialOfferType.TwoForAmount) {
+            return new TwoForAmountOffer(this.argument);
         } else {
             return null;
         }
@@ -58,11 +61,6 @@ export class Offer {
         if (this.offerType == SpecialOfferType.FiveForAmount && quantity >= 5) {
             const discountTotal = unitPrice * quantity - (this.argument * numberOfXs + quantity % 5 * unitPrice)
             return new Discount(product, x + " for " + this.argument, discountTotal)
-        }
-        if (this.offerType == SpecialOfferType.TwoForAmount && quantity >= 2) {
-            const total = this.argument * Math.floor(quantity / x) + quantity % 2 * unitPrice
-            const discountN = unitPrice * quantity - total
-            return new Discount(product, "2 for " + this.argument, discountN)
         }
         return null
     }
