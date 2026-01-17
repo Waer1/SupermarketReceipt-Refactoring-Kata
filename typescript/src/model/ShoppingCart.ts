@@ -60,8 +60,9 @@ export class ShoppingCart {
     }
 
 
-    private getAvailableDiscount(offer: Offer, quantity: number, numberOfXs: number, discount: Discount | null, product: Product, x: number, catalog: SupermarketCatalog) {
+    private getAvailableDiscount(offer: Offer, quantity: number, _numberOfXs: number, discount: Discount | null, product: Product, x: number, catalog: SupermarketCatalog) {
         const unitPrice: number= catalog.getUnitPrice(product);
+        const numberOfXs = Math.floor(quantity / x);
 
         if (offer.offerType == SpecialOfferType.ThreeForTwo && quantity > 2) {
             // this is for each 3 items discountAmount is the price of the 1 of them 
@@ -97,7 +98,6 @@ export class ShoppingCart {
 
                 let discount : Discount|null = null;
                 const numberOfXs = Math.floor(quantity / x);
-                const unitPrice: number= catalog.getUnitPrice(product);
                 discount = this.getAvailableDiscount(offer, quantity, numberOfXs, discount, product, x, catalog)
 
                 // above part is responsible for getting the discount amount 
