@@ -50,8 +50,7 @@ export class ShoppingCart {
     handleOffers(receipt: Receipt,  offers: OffersByProduct, catalog: SupermarketCatalog ):void {
         for (const productName in this.productQuantities()) {
             const productQuantity = this._productQuantities[productName]
-            const product = productQuantity.product;
-            const pricedProductQuantity = new PricedProductQuantity(productQuantity, catalog.getUnitPrice(product));
+            const pricedProductQuantity = new PricedProductQuantity(productQuantity, catalog.getUnitPrice(productQuantity.product));
             if (offers[productName]) {
                 const offer : Offer = offers[productName];
                 
