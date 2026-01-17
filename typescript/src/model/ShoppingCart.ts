@@ -60,8 +60,9 @@ export class ShoppingCart {
     }
 
 
-    private getAvailableDiscount(offer: Offer, quantity: number, product: Product, x: number, catalog: SupermarketCatalog) {
+    private getAvailableDiscount(offer: Offer, quantity: number, product: Product, _x: number, catalog: SupermarketCatalog) {
         const unitPrice: number= catalog.getUnitPrice(product);
+        const x = this.getRequiredQuantityForDiscount(offer);
         const numberOfXs = Math.floor(quantity / x);
 
         if (offer.offerType == SpecialOfferType.ThreeForTwo && quantity > 2) {
