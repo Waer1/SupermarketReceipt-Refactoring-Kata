@@ -12,17 +12,7 @@ export class ReceiptPrinter {
     public printReceipt(receipt: Receipt): string {
         let result = "";
         for (const item of receipt.getItems()) {
-            let price = item.getFormatedTotalPrice();
-            let quantity = item.getFormatedQuantity();
-            let unitPrice = item.getFormatedUnitPrice();
-
-            let whitespaceSize = item.getWhitespaceSize(this.columns);
-            let line = item.product.name + ReceiptPrinter.getWhitespace(whitespaceSize) + price + this.EOL;
-
-            if (item.quantity != 1) {
-                line += "  " + unitPrice + " * " + quantity + this.EOL;
-            }
-            result += line;
+            result += item.getPrintableLine(this.columns);
         }
 
         
