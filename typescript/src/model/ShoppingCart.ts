@@ -60,28 +60,28 @@ export class ShoppingCart {
     }
 
 
-    private getAvailableDiscount(offer: Offer, quantity: number, discount: Discount | null, product: Product, x: number, catalog: SupermarketCatalog) {
+    private getAvailableDiscount(offer: Offer, quantity: number, product: Product, x: number, catalog: SupermarketCatalog) {
         const unitPrice: number= catalog.getUnitPrice(product);
         const numberOfXs = Math.floor(quantity / x);
 
         if (offer.offerType == SpecialOfferType.ThreeForTwo && quantity > 2) {
             // this is for each 3 items discountAmount is the price of the 1 of them 
             const discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantity % 3 * unitPrice)
-            discount = new Discount(product, "3 for 2", discountAmount)
+            return new Discount(product, "3 for 2", discountAmount)
         }
         if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
-            discount = new Discount(product, offer.argument + "% off", quantity * unitPrice * offer.argument / 100.0)
+            return new Discount(product, offer.argument + "% off", quantity * unitPrice * offer.argument / 100.0)
         }
         if (offer.offerType == SpecialOfferType.FiveForAmount && quantity >= 5) {
             const discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantity % 5 * unitPrice)
-            discount = new Discount(product, x + " for " + offer.argument, discountTotal)
+            return new Discount(product, x + " for " + offer.argument, discountTotal)
         }
         if (offer.offerType == SpecialOfferType.TwoForAmount && quantity >= 2) {
             const total = offer.argument * Math.floor(quantity / x) + quantity % 2 * unitPrice
             const discountN = unitPrice * quantity - total
-            discount = new Discount(product, "2 for " + offer.argument, discountN)
+            return new Discount(product, "2 for " + offer.argument, discountN)
         }
-        return discount
+        return null
     }
 
     handleOffers(receipt: Receipt,  offers: OffersByProduct, catalog: SupermarketCatalog ):void {
@@ -96,10 +96,7 @@ export class ShoppingCart {
 
                 // above part is responsible for getting X which is the required number of item you need to get to have a discount
 
-                let discount : Discount|null = null;
-                const numberOfXs = Math.floor(quantity / x);
-                discount = this.getAvailableDiscount(offer, quantity, discount, product, x, catalog)
-
+                const discount = this.getAvailableDiscount(offer, quantity, product, x, catalog)
                 // above part is responsible for getting the discount amount 
 
                 if (discount != null)
