@@ -51,7 +51,7 @@ export class ShoppingCart {
             return 3;
         } else if (offer.offerType == SpecialOfferType.TwoForAmount) {
             return 2;
-        } else if (offer.offerType == SpecialOfferType.FiveForAmount) {
+        } if (offer.offerType == SpecialOfferType.FiveForAmount) {
             return 5;
         } else if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
             return 1;
@@ -67,23 +67,15 @@ export class ShoppingCart {
             const quantity: number = this._productQuantities[productName].quantity;
             if (offers[productName]) {
                 const offer : Offer = offers[productName];
-                const unitPrice: number= catalog.getUnitPrice(product);
-                let x = 1;
-                if (offer.offerType == SpecialOfferType.ThreeForTwo) {
-                    x = 3;
-                } else if (offer.offerType == SpecialOfferType.TwoForAmount) {
-                    x = 2;
-                } if (offer.offerType == SpecialOfferType.FiveForAmount) {
-                    x = 5;
-                } else if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
-                    x = 1;
-                }
+                
+                let x = this.getRequiredQuantityForDiscount(offer);
 
                 // above part is responsible for getting X which is the required number of item you need to get to have a discount
 
                 let quantityAsInt = quantity;
                 const numberOfXs = Math.floor(quantityAsInt / x);
                 let discount : Discount|null = null;
+                const unitPrice: number= catalog.getUnitPrice(product);
                 if (offer.offerType == SpecialOfferType.ThreeForTwo && quantityAsInt > 2) {
                     // this is for each 3 items discountAmount is the price of the 1 of them 
                     const discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantityAsInt % 3 * unitPrice);
