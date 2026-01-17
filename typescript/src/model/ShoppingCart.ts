@@ -45,6 +45,21 @@ export class ShoppingCart {
         return new ProductQuantity(product, productQuantity.quantity + quantity)
     }
 
+
+    private getRequiredQuantityForDiscount(offer: Offer): number {
+        if (offer.offerType == SpecialOfferType.ThreeForTwo) {
+            return 3;
+        } else if (offer.offerType == SpecialOfferType.TwoForAmount) {
+            return 2;
+        } else if (offer.offerType == SpecialOfferType.FiveForAmount) {
+            return 5;
+        } else if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
+            return 1;
+        }
+        return 0;
+    }
+
+
     handleOffers(receipt: Receipt,  offers: OffersByProduct, catalog: SupermarketCatalog ):void {
         for (const productName in this.productQuantities()) {
             const productQuantity = this._productQuantities[productName]
@@ -61,12 +76,6 @@ export class ShoppingCart {
 
                 } else if (offer.offerType == SpecialOfferType.TwoForAmount) {
                     x = 2;
-                    if (quantityAsInt >= 2) {
-                        const total = offer.argument * Math.floor(quantityAsInt / x) + quantityAsInt % 2 * unitPrice;
-                        const discountN = unitPrice * quantity - total;
-                        discount = new Discount(product, "2 for " + offer.argument, discountN);
-                    }
-
                 } if (offer.offerType == SpecialOfferType.FiveForAmount) {
                     x = 5;
                 }
@@ -86,6 +95,12 @@ export class ShoppingCart {
                 if (offer.offerType == SpecialOfferType.FiveForAmount && quantityAsInt >= 5) {
                     const discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantityAsInt % 5 * unitPrice);
                     discount = new Discount(product, x + " for " + offer.argument, discountTotal);
+                }
+
+                if (offer.offerType == SpecialOfferType.TwoForAmount && quantityAsInt >= 2) {
+                    const total = offer.argument * Math.floor(quantityAsInt / x) + quantityAsInt % 2 * unitPrice;
+                    const discountN = unitPrice * quantity - total;
+                    discount = new Discount(product, "2 for " + offer.argument, discountN);
                 }
 
                 // above part is responsible for getting the discount amount 
