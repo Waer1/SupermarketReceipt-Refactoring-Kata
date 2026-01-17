@@ -31,7 +31,7 @@ export class Offer {
 
 
 
-    getAvailableDiscount(quantity: number, _product: Product, catalog: SupermarketCatalog, pricedProductQuantity: PricedProductQuantity) {
+    getAvailableDiscount(quantity: number, pricedProductQuantity: PricedProductQuantity) {
         const unitPrice = pricedProductQuantity.unitPrice;
         const product = pricedProductQuantity.product;
         const x = this.getRequiredQuantityForDiscount();
