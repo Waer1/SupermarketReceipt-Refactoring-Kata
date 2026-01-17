@@ -1,4 +1,6 @@
 import { Discount } from "./Discount";
+import { DiscountStrategy } from "./discountStrategies/DiscountStrategy";
+import { ThreeForTwoOffer } from "./discountStrategies/ThreeForTwoOffer";
 import { PricedProductQuantity } from "./PricedProductQuantity";
 import { Product } from "./Product"
 import { SpecialOfferType } from "./SpecialOfferType"
@@ -29,6 +31,13 @@ export class Offer {
         }
     }
 
+    getDiscountStrategy(): DiscountStrategy | null {
+        if (this.offerType == SpecialOfferType.ThreeForTwo) {
+            return new ThreeForTwoOffer();
+        }  else {
+            return null;
+        }
+    }
 
 
     getAvailableDiscount(pricedProductQuantity: PricedProductQuantity) {
@@ -37,12 +46,12 @@ export class Offer {
         const quantity = pricedProductQuantity.quantity;
         const x = this.getRequiredQuantityForDiscount();
         const numberOfXs = Math.floor(quantity / x);
+        const discountStrategy = this.getDiscountStrategy();
 
-        if (this.offerType == SpecialOfferType.ThreeForTwo && quantity > 2) {
-            // this is for each 3 items discountAmount is the price of the 1 of them 
-            const discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantity % 3 * unitPrice)
-            return new Discount(product, "3 for 2", discountAmount)
+        if (discountStrategy) {
+            return discountStrategy.getDiscount(pricedProductQuantity);
         }
+
         if (this.offerType == SpecialOfferType.TenPercentDiscount) {
             return new Discount(product, this.argument + "% off", quantity * unitPrice * this.argument / 100.0)
         }
