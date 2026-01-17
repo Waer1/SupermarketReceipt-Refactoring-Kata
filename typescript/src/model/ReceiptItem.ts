@@ -17,10 +17,6 @@ export class ReceiptItem {
         return this.format2Decimals(this.totalPrice);
     }
 
-    getFormatedQuantity(): string {
-        return this.presentQuantity();
-    }
-
     getFormatedUnitPrice(): string {
         return this.format2Decimals(this.price);
     }
@@ -45,7 +41,7 @@ export class ReceiptItem {
         }).format(number)
     }
 
-    presentQuantity(): string  {
+    getFormatedQuantity(): string  {
             return ProductUnit.Each == this.product.unit
                 // TODO make sure this is the simplest way to make something similar to the java version
                     ? new Intl.NumberFormat('en-UK', {maximumFractionDigits: 0}).format(this.quantity)
