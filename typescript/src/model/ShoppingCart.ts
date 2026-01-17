@@ -79,7 +79,7 @@ export class ShoppingCart {
             if (offers[productName]) {
                 const offer : Offer = offers[productName];
                 
-                const discount = this.getAvailableDiscount(offer, quantity, product, catalog)
+                const discount = offer.getAvailableDiscount(quantity, product, catalog)
 
                 if (discount != null)
                     receipt.addDiscount(discount);
