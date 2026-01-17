@@ -46,31 +46,6 @@ export class ShoppingCart {
     }
 
 
-    private getAvailableDiscount(offer: Offer, quantity: number, product: Product, catalog: SupermarketCatalog) {
-        const unitPrice: number= catalog.getUnitPrice(product);
-        const x = offer.getRequiredQuantityForDiscount();
-        const numberOfXs = Math.floor(quantity / x);
-
-        if (offer.offerType == SpecialOfferType.ThreeForTwo && quantity > 2) {
-            // this is for each 3 items discountAmount is the price of the 1 of them 
-            const discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantity % 3 * unitPrice)
-            return new Discount(product, "3 for 2", discountAmount)
-        }
-        if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
-            return new Discount(product, offer.argument + "% off", quantity * unitPrice * offer.argument / 100.0)
-        }
-        if (offer.offerType == SpecialOfferType.FiveForAmount && quantity >= 5) {
-            const discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantity % 5 * unitPrice)
-            return new Discount(product, x + " for " + offer.argument, discountTotal)
-        }
-        if (offer.offerType == SpecialOfferType.TwoForAmount && quantity >= 2) {
-            const total = offer.argument * Math.floor(quantity / x) + quantity % 2 * unitPrice
-            const discountN = unitPrice * quantity - total
-            return new Discount(product, "2 for " + offer.argument, discountN)
-        }
-        return null
-    }
-
     handleOffers(receipt: Receipt,  offers: OffersByProduct, catalog: SupermarketCatalog ):void {
         for (const productName in this.productQuantities()) {
             const productQuantity = this._productQuantities[productName]
