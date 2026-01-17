@@ -14,6 +14,9 @@ export class ReceiptItem {
         return this.format2Decimals(this.totalPrice);
     }
 
+    getFormatedQuantity(): string {
+        return this.presentQuantity();
+    }
 
     format2Decimals(number: number) {
         return new Intl.NumberFormat('en-UK', {
