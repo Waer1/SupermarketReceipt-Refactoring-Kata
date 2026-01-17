@@ -1,7 +1,4 @@
-import {ProductUnit} from "./model/ProductUnit"
-import {ReceiptItem} from "./model/ReceiptItem"
 import {Receipt} from "./model/Receipt"
-import { ReceiptDiscount } from "./model/ReceiptDiscount";
 import { PrinterType } from "./printers/PrinterType";
 import { IReceiptPrinter } from "./printers/ReceiptPrinterInterface";
 import { StringReceiptPrinter } from "./printers/StringReceiptPrinter";
@@ -29,7 +26,7 @@ export class ReceiptPrinter {
         const printer = this.getPrinter(this.printerType, receipt);
         return printer.print();
     }
-    
+
     static format2Decimals(number: number) {
         return new Intl.NumberFormat('en-UK', {
             minimumFractionDigits: 2,
