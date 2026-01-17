@@ -3,11 +3,11 @@ import {SupermarketCatalog} from "./SupermarketCatalog"
 import * as _ from "lodash"
 import {ProductQuantity} from "./ProductQuantity"
 import {Receipt} from "./Receipt"
-import {Offer} from "./Offer"
+import {IOffer} from "./IOffer"
 import { PricedProductQuantity } from "./PricedProductQuantity"
 
 type ProductQuantities = { [productName: string]: ProductQuantity }
-export type OffersByProduct = {[productName: string]: Offer};
+export type OffersByProduct = {[productName: string]: IOffer};
 
 export class ShoppingCart {
 
@@ -49,7 +49,7 @@ export class ShoppingCart {
         for (const productName in this.productQuantities()) {
             const productQuantity = this._productQuantities[productName]
             const pricedProductQuantity = new PricedProductQuantity(productQuantity, catalog.getUnitPrice(productQuantity.product));
-            const offer : Offer = offers[productName];
+            const offer : IOffer = offers[productName];
             if (offer) {
                 const discount = offer.getAvailableDiscount(pricedProductQuantity)
                 if (discount != null) receipt.addDiscount(discount);
