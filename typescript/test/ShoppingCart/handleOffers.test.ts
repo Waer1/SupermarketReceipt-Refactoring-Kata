@@ -6,6 +6,7 @@ import { FakeCatalog } from "../FakeCatalog";
 import { Receipt } from "../../src/model/Receipt";
 import { Offer } from "../../src/model/Offer";
 import { SpecialOfferType } from "../../src/model/SpecialOfferType";
+import { BundleOffer } from "../../src/model/BundleOffer";
 
 describe('ShoppingCart', () => {
     describe('handleOffers', () => {
@@ -303,10 +304,25 @@ describe('ShoppingCart', () => {
         });
 
         describe('BundleDiscount', () => {
-            // Bundle: buy all products in bundle, get 10% off the bundle total
-            // Note: BundleDiscount needs a different Offer structure - array of products
+            const bundleOffer = new BundleOffer([apple, banana], 25);
 
-            it('should apply 10% discount when all bundle items are purchased');
+            it('should apply 10% discount when all bundle items are purchased', () => {
+                const catalog = new FakeCatalog();
+                catalog.addProduct(apple, 20);
+                catalog.addProduct(banana, 10);
+                const receipt = new Receipt();
+                const cart = new ShoppingCart();
+                cart.addItemQuantity(apple, 2);
+                cart.addItemQuantity(banana, 2);
+                cart.handleOffers(receipt, {
+                    [apple.name]: bundleOffer
+                }, catalog);
+                // since the bundle price is 25, the discount amount will be (20 + 10) - 25 = 5
+                // and since we buy 2 of each product, the discount will be applied only twice 5 * 2 = 10
+                const discounts = receipt.getDiscounts();
+                assert.equal(discounts.length, 1);
+                assert.equal(discounts[0].discountAmount, 10);
+            });
 
             it('should apply discount only once per complete bundle');
 
