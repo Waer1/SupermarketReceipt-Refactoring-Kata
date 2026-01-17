@@ -20,20 +20,6 @@ export class Offer {
         return this.product;
     }
 
-    getRequiredQuantityForDiscount(): number {
-        if (this.offerType == SpecialOfferType.ThreeForTwo) {
-            return 3;
-        } else if (this.offerType == SpecialOfferType.TwoForAmount) {
-            return 2;
-        } else if (this.offerType == SpecialOfferType.FiveForAmount) {
-            return 5;
-        } else if (this.offerType == SpecialOfferType.TenPercentDiscount) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
     getDiscountStrategy(): DiscountStrategy | null {
         if (this.offerType == SpecialOfferType.ThreeForTwo) {
             return new ThreeForTwoOffer();
@@ -47,7 +33,6 @@ export class Offer {
             return null;
         }
     }
-
 
     getAvailableDiscount(pricedProductQuantity: PricedProductQuantity) {
         const discountStrategy = this.getDiscountStrategy();
