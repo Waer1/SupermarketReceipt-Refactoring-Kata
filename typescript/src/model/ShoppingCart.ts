@@ -60,7 +60,7 @@ export class ShoppingCart {
     }
 
 
-    private getAvailableDiscount(offer: Offer, quantity: number, _numberOfXs: number, discount: Discount | null, product: Product, x: number, catalog: SupermarketCatalog) {
+    private getAvailableDiscount(offer: Offer, quantity: number, discount: Discount | null, product: Product, x: number, catalog: SupermarketCatalog) {
         const unitPrice: number= catalog.getUnitPrice(product);
         const numberOfXs = Math.floor(quantity / x);
 
@@ -98,7 +98,7 @@ export class ShoppingCart {
 
                 let discount : Discount|null = null;
                 const numberOfXs = Math.floor(quantity / x);
-                discount = this.getAvailableDiscount(offer, quantity, numberOfXs, discount, product, x, catalog)
+                discount = this.getAvailableDiscount(offer, quantity, discount, product, x, catalog)
 
                 // above part is responsible for getting the discount amount 
 
