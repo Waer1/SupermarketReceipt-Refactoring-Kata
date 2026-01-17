@@ -19,18 +19,7 @@ export class ReceiptPrinter {
         
         for (const discount of receipt.getDiscounts()) {
             const receiptDiscount = new ReceiptDiscount(discount);
-
-            let productPresentation = discount.product.name;
-            let pricePresentation = ReceiptPrinter.format2Decimals(discount.discountAmount);
-            let description = discount.description;
-            result += description;
-            result += "(";
-            result += productPresentation;
-            result += ")";
-            result += ReceiptPrinter.getWhitespace(this.columns - 3 - productPresentation.length - description.length - pricePresentation.length);
-            result += "-";
-            result += pricePresentation;
-            result += this.EOL;
+            result += receiptDiscount.getPrintableLine(this.columns);
         }
         result += this.EOL;
         let pricePresentation = ReceiptPrinter.format2Decimals(receipt.getTotalPrice());
