@@ -71,11 +71,12 @@ export class ShoppingCart {
                 let x = 1;
                 if (offer.offerType == SpecialOfferType.ThreeForTwo) {
                     x = 3;
-
                 } else if (offer.offerType == SpecialOfferType.TwoForAmount) {
                     x = 2;
                 } if (offer.offerType == SpecialOfferType.FiveForAmount) {
                     x = 5;
+                } else if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
+                    x = 1;
                 }
 
                 // above part is responsible for getting X which is the required number of item you need to get to have a discount
