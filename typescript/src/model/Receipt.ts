@@ -19,8 +19,8 @@ export class Receipt {
         return total;
     }
 
-    public addProduct( p: Product, quantity: number, price: number, totalPrice: number, pricedProductQuantity: PricedProductQuantity): void {
-        this.items.push(new ReceiptItem(p, quantity, price, totalPrice));
+    public addProduct( _p: Product, _quantity: number, _price: number, _totalPrice: number, pricedProductQuantity: PricedProductQuantity): void {
+        this.items.push(new ReceiptItem(pricedProductQuantity.product, pricedProductQuantity.quantity, pricedProductQuantity.unitPrice, pricedProductQuantity.totalPrice));
     }
 
     public getItems(): ReceiptItem[] {
