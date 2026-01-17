@@ -12,7 +12,7 @@ export class ReceiptPrinter {
     public printReceipt(receipt: Receipt): string {
         let result = "";
         for (const item of receipt.getItems()) {
-            let price = this.format2Decimals(item.totalPrice);
+            let price = item.getFormatedTotalPrice();
             let quantity = ReceiptPrinter.presentQuantity(item);
             let unitPrice = this.format2Decimals(item.price);
 
