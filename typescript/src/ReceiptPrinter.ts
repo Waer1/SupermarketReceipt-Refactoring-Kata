@@ -1,4 +1,5 @@
 import {Receipt} from "./model/Receipt"
+import { HtmlReceiptPrinter } from "./printers/HtmlReceiptPrinter";
 import { PrinterType } from "./printers/PrinterType";
 import { IReceiptPrinter } from "./printers/ReceiptPrinterInterface";
 import { StringReceiptPrinter } from "./printers/StringReceiptPrinter";
@@ -14,6 +15,8 @@ export class ReceiptPrinter {
         switch (printerType) {
             case PrinterType.String:
                 return new StringReceiptPrinter(receipt, this.columns);
+            case PrinterType.Html:
+                return new HtmlReceiptPrinter(receipt);
             default:
                 throw new Error("Invalid printer type");
         }
