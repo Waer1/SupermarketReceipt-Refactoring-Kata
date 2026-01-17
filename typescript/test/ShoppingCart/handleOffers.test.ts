@@ -324,13 +324,56 @@ describe('ShoppingCart', () => {
                 assert.equal(discounts[0].discountAmount, 10);
             });
 
-            it('should apply discount only once per complete bundle');
+            it('should apply discount multiple times for multiple complete bundles', () => {
+                const catalog = new FakeCatalog();
+                catalog.addProduct(apple, 20);
+                catalog.addProduct(banana, 10);
+                const receipt = new Receipt();
+                const cart = new ShoppingCart();
+                cart.addItemQuantity(apple, 3);
+                cart.addItemQuantity(banana, 3);
+                cart.handleOffers(receipt, {
+                    [apple.name]: bundleOffer
+                }, catalog);
+                // since the bundle price is 25, the discount amount will be (20 + 10) - 25 = 5
+                // and since we buy 2 of each product, the discount will be applied only twice 5 * 3 = 15
+                const discounts = receipt.getDiscounts();
+                assert.equal(discounts.length, 1);
+                assert.equal(discounts[0].discountAmount, 15);
+            });
 
-            it('should apply discount multiple times for multiple complete bundles');
+            it('should not apply discount when bundle is incomplete', () => {
+                const catalog = new FakeCatalog();
+                catalog.addProduct(apple, 20);
+                catalog.addProduct(banana, 10);
+                const receipt = new Receipt();
+                const cart = new ShoppingCart();
+                cart.addItemQuantity(apple, 2);
+                cart.handleOffers(receipt, {
+                    [apple.name]: bundleOffer
+                }, catalog);
+                const discounts = receipt.getDiscounts();
+                assert.equal(discounts.length, 0);
+            });
 
-            it('should not apply discount when bundle is incomplete');
-
-            it('should work with 3-product bundle');
+            it('should work with 3-product bundle', () => {
+                const bundleOffer = new BundleOffer([apple, banana, orange], 25);
+                const catalog = new FakeCatalog();
+                catalog.addProduct(apple, 20);
+                catalog.addProduct(banana, 10);
+                catalog.addProduct(orange, 5);
+                const receipt = new Receipt();
+                const cart = new ShoppingCart();
+                cart.addItemQuantity(apple, 2);
+                cart.addItemQuantity(banana, 2);
+                cart.addItemQuantity(orange, 1);
+                cart.handleOffers(receipt, {
+                    [apple.name]: bundleOffer
+                }, catalog);
+                const discounts = receipt.getDiscounts();
+                assert.equal(discounts.length, 1);
+                assert.equal(discounts[0].discountAmount, 10);
+            });
         });
 
     });
