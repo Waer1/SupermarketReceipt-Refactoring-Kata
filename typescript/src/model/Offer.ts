@@ -1,5 +1,6 @@
 import { Discount } from "./Discount";
 import { DiscountStrategy } from "./discountStrategies/DiscountStrategy";
+import { FiveForAmountOffer } from "./discountStrategies/FiveForAmountOffer";
 import { TenPercentDiscountOffer } from "./discountStrategies/TenPercentDiscountOffer";
 import { ThreeForTwoOffer } from "./discountStrategies/ThreeForTwoOffer";
 import { TwoForAmountOffer } from "./discountStrategies/TwoForAmountOffer";
@@ -40,6 +41,8 @@ export class Offer {
             return new TenPercentDiscountOffer(this.argument);
         } else if (this.offerType == SpecialOfferType.TwoForAmount) {
             return new TwoForAmountOffer(this.argument);
+        } else if (this.offerType == SpecialOfferType.FiveForAmount) {
+            return new FiveForAmountOffer(this.argument);
         } else {
             return null;
         }
@@ -58,10 +61,6 @@ export class Offer {
             return discountStrategy.getDiscount(pricedProductQuantity);
         }
 
-        if (this.offerType == SpecialOfferType.FiveForAmount && quantity >= 5) {
-            const discountTotal = unitPrice * quantity - (this.argument * numberOfXs + quantity % 5 * unitPrice)
-            return new Discount(product, x + " for " + this.argument, discountTotal)
-        }
         return null
     }
 }
