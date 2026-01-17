@@ -1,4 +1,5 @@
 import {Product} from "./Product"
+import { ProductUnit } from "./ProductUnit";
 
 export class ReceiptItem {
 
@@ -20,4 +21,11 @@ export class ReceiptItem {
             maximumFractionDigits: 2
         }).format(number)
     }
+
+    presentQuantity(): string  {
+            return ProductUnit.Each == this.product.unit
+                // TODO make sure this is the simplest way to make something similar to the java version
+                    ? new Intl.NumberFormat('en-UK', {maximumFractionDigits: 0}).format(this.quantity)
+                    : new Intl.NumberFormat('en-UK', {minimumFractionDigits: 3}).format(this.quantity);
+        }
 }

@@ -13,7 +13,7 @@ export class ReceiptPrinter {
         let result = "";
         for (const item of receipt.getItems()) {
             let price = item.getFormatedTotalPrice();
-            let quantity = ReceiptPrinter.presentQuantity(item);
+            let quantity = item.presentQuantity();
             let unitPrice = this.format2Decimals(item.price);
 
             let whitespaceSize = this.columns - item.product.name.length - price.length;
