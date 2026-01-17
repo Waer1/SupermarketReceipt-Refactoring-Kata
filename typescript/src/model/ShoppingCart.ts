@@ -60,7 +60,7 @@ export class ShoppingCart {
     }
 
 
-    private getAvailableDiscount(offer: Offer, quantity: number, product: Product, _x: number, catalog: SupermarketCatalog) {
+    private getAvailableDiscount(offer: Offer, quantity: number, product: Product, catalog: SupermarketCatalog) {
         const unitPrice: number= catalog.getUnitPrice(product);
         const x = this.getRequiredQuantityForDiscount(offer);
         const numberOfXs = Math.floor(quantity / x);
@@ -93,8 +93,7 @@ export class ShoppingCart {
             if (offers[productName]) {
                 const offer : Offer = offers[productName];
                 
-                const x = this.getRequiredQuantityForDiscount(offer);
-                const discount = this.getAvailableDiscount(offer, quantity, product, x, catalog)
+                const discount = this.getAvailableDiscount(offer, quantity, product, catalog)
 
                 if (discount != null)
                     receipt.addDiscount(discount);
