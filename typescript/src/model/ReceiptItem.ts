@@ -1,7 +1,10 @@
+import { ReceiptPrinter } from "../ReceiptPrinter";
 import {Product} from "./Product"
 import { ProductUnit } from "./ProductUnit";
 
 export class ReceiptItem {
+    private readonly EOL = process.platform === "win32" ? "\r\n" : "\n";
+
 
     public constructor(public readonly product: Product,
                        public readonly quantity: number,
@@ -24,6 +27,15 @@ export class ReceiptItem {
 
     getWhitespaceSize(columns: number): number {
         return columns - this.product.name.length - this.getFormatedTotalPrice().length;
+    }
+
+    getPrintableLine(columns: number): string {
+        let whitespaceSize = this.getWhitespaceSize(columns);
+        let line = this.product.name + ReceiptPrinter.getWhitespace(whitespaceSize) + this.getFormatedTotalPrice() + this.EOL;
+        if (this.quantity != 1) {
+            line += "  " + this.getFormatedUnitPrice() + " * " + this.getFormatedQuantity() + this.EOL;
+        }
+        return line;
     }
 
     format2Decimals(number: number) {

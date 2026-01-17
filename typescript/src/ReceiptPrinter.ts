@@ -64,7 +64,7 @@ export class ReceiptPrinter {
                 : new Intl.NumberFormat('en-UK', {minimumFractionDigits: 3}).format(item.quantity);
     }
 
-    private static getWhitespace(whitespaceSize: number): string {
+    static getWhitespace(whitespaceSize: number): string {
         return " ".repeat(whitespaceSize);
     }
 }
