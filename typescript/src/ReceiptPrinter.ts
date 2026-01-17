@@ -21,7 +21,7 @@ export class ReceiptPrinter {
             const receiptDiscount = new ReceiptDiscount(discount);
             result += receiptDiscount.getPrintableLine(this.columns);
         }
-        result += this.EOL;
+        result = this.addEndLine(result);
         let pricePresentation = ReceiptPrinter.format2Decimals(receipt.getTotalPrice());
         let total = "Total: ";
         let whitespace = ReceiptPrinter.getWhitespace(this.columns - total.length - pricePresentation.length);
@@ -30,6 +30,10 @@ export class ReceiptPrinter {
         result += pricePresentation;
 
         return result;
+    }
+
+    addEndLine(result: string): string {
+        return result + this.EOL;
     }
 
     static format2Decimals(number: number) {
