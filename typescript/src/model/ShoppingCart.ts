@@ -92,12 +92,8 @@ export class ShoppingCart {
             if (offers[productName]) {
                 const offer : Offer = offers[productName];
                 
-                let x = this.getRequiredQuantityForDiscount(offer);
-
-                // above part is responsible for getting X which is the required number of item you need to get to have a discount
-
+                const x = this.getRequiredQuantityForDiscount(offer);
                 const discount = this.getAvailableDiscount(offer, quantity, product, x, catalog)
-                // above part is responsible for getting the discount amount 
 
                 if (discount != null)
                     receipt.addDiscount(discount);
