@@ -1,6 +1,5 @@
 import {Discount} from "./Discount"
 import { PricedProductQuantity } from "./PricedProductQuantity";
-import {Product} from "./Product"
 import {ReceiptItem} from "./ReceiptItem"
 import * as _ from "lodash"
 
