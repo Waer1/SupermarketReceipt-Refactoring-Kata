@@ -14,17 +14,18 @@ export class ReceiptPrinter {
         for (const item of receipt.getItems()) {
             let price = this.format2Decimals(item.totalPrice);
             let quantity = ReceiptPrinter.presentQuantity(item);
-            let name = item.product.name;
             let unitPrice = this.format2Decimals(item.price);
 
-            let whitespaceSize = this.columns - name.length - price.length;
-            let line = name + ReceiptPrinter.getWhitespace(whitespaceSize) + price + this.EOL;
+            let whitespaceSize = this.columns - item.product.name.length - price.length;
+            let line = item.product.name + ReceiptPrinter.getWhitespace(whitespaceSize) + price + this.EOL;
 
             if (item.quantity != 1) {
                 line += "  " + unitPrice + " * " + quantity + this.EOL;
             }
             result += line;
         }
+
+        
         for (const discount of receipt.getDiscounts()) {
             let productPresentation = discount.product.name;
             let pricePresentation = this.format2Decimals(discount.discountAmount);
