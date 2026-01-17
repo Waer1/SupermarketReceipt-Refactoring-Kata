@@ -4,9 +4,6 @@ import { IReceiptPrinter } from "./printers/ReceiptPrinterInterface";
 import { StringReceiptPrinter } from "./printers/StringReceiptPrinter";
 
 export class ReceiptPrinter {
-
-    private readonly EOL = process.platform === "win32" ? "\r\n" : "\n";
-
     public constructor(
         private readonly columns: number = 40, 
         private readonly printerType: PrinterType = PrinterType.String
