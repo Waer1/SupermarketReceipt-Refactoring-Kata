@@ -16,7 +16,6 @@ export class ReceiptPrinter {
             result += item.getPrintableLine(this.columns);
         }
 
-        
         for (const discount of receipt.getDiscounts()) {
             const receiptDiscount = new ReceiptDiscount(discount);
             result += receiptDiscount.getPrintableLine(this.columns);
