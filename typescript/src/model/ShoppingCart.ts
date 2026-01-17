@@ -51,13 +51,10 @@ export class ShoppingCart {
         for (const productName in this.productQuantities()) {
             const productQuantity = this._productQuantities[productName]
             const pricedProductQuantity = new PricedProductQuantity(productQuantity, catalog.getUnitPrice(productQuantity.product));
-            if (offers[productName]) {
-                const offer : Offer = offers[productName];
-                
+            const offer : Offer = offers[productName];
+            if (offer) {
                 const discount = offer.getAvailableDiscount(pricedProductQuantity)
-
-                if (discount != null)
-                    receipt.addDiscount(discount);
+                if (discount != null) receipt.addDiscount(discount);
             }
 
         }
