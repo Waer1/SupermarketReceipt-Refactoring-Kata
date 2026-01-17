@@ -34,7 +34,11 @@ export class Offer implements IOffer {
     }
 
     getAvailableDiscount(allProducts: PricedProductQuantityMap): Discount | null {
-        const pricedProductQuantity = allProducts[this.product.name];
+        const pricedProductQuantity = allProducts.get(this.product.name);
+
+        if (!pricedProductQuantity) {
+            return null;
+        }
 
         const discountStrategy = this.getDiscountStrategy();
 
@@ -43,5 +47,5 @@ export class Offer implements IOffer {
         }
 
         return null
-    }
+    }   
 }

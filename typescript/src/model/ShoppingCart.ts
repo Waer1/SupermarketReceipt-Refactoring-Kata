@@ -46,12 +46,9 @@ export class ShoppingCart {
 
 
     handleOffers(receipt: Receipt,  offers: OffersByProduct, catalog: SupermarketCatalog ):void {
-        // Build map of all priced products (needed for bundle offers)
-        const allPricedProducts: PricedProductQuantityMap = {};
-        for (const productName in this.productQuantities()) {
-            const productQuantity = this._productQuantities[productName];
-            allPricedProducts[productName] = new PricedProductQuantity(productQuantity, catalog.getUnitPrice(productQuantity.product));
-        }
+        const allProducts = Object.values(this.productQuantities());
+        const productPricedQuantities = allProducts.map(productQuantity => new PricedProductQuantity(productQuantity, catalog.getUnitPrice(productQuantity.product)));
+        const allPricedProducts = new PricedProductQuantityMap(productPricedQuantities);
 
         // Process offers
         for (const productName in this.productQuantities()) {
