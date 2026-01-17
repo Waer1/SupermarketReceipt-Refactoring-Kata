@@ -18,6 +18,10 @@ export class ReceiptItem {
         return this.presentQuantity();
     }
 
+    getFormatedUnitPrice(): string {
+        return this.format2Decimals(this.price);
+    }
+
     format2Decimals(number: number) {
         return new Intl.NumberFormat('en-UK', {
             minimumFractionDigits: 2,
