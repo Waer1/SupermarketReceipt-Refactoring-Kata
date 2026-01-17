@@ -9,7 +9,7 @@ export class ReceiptPrinter {
     public constructor(private readonly columns: number = 40) {
     }
 
-    public printReceipt( receipt: Receipt): string {
+    public printReceipt(receipt: Receipt): string {
         let result = "";
         for (const item of receipt.getItems()) {
             let price = this.format2Decimals(item.totalPrice);
