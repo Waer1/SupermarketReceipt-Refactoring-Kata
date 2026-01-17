@@ -31,9 +31,10 @@ export class Offer {
 
 
 
-    getAvailableDiscount(quantity: number, pricedProductQuantity: PricedProductQuantity) {
+    getAvailableDiscount(_quantity: number, pricedProductQuantity: PricedProductQuantity) {
         const unitPrice = pricedProductQuantity.unitPrice;
         const product = pricedProductQuantity.product;
+        const quantity = pricedProductQuantity.quantity;
         const x = this.getRequiredQuantityForDiscount();
         const numberOfXs = Math.floor(quantity / x);
 
