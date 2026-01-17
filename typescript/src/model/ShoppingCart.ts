@@ -51,12 +51,13 @@ export class ShoppingCart {
             return 3;
         } else if (offer.offerType == SpecialOfferType.TwoForAmount) {
             return 2;
-        } if (offer.offerType == SpecialOfferType.FiveForAmount) {
+        } else if (offer.offerType == SpecialOfferType.FiveForAmount) {
             return 5;
         } else if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
             return 1;
+        } else {
+            return 0;
         }
-        return 0;
     }
 
 
