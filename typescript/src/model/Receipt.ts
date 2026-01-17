@@ -19,7 +19,7 @@ export class Receipt {
         return total;
     }
 
-    public addProduct( _p: Product, _quantity: number, _price: number, _totalPrice: number, pricedProductQuantity: PricedProductQuantity): void {
+    public addProduct(pricedProductQuantity: PricedProductQuantity): void {
         this.items.push(new ReceiptItem(pricedProductQuantity.product, pricedProductQuantity.quantity, pricedProductQuantity.unitPrice, pricedProductQuantity.totalPrice));
     }
 
