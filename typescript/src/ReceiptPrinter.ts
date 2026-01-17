@@ -22,14 +22,17 @@ export class ReceiptPrinter {
             result += receiptDiscount.getPrintableLine(this.columns);
         }
         result = this.addEndLine(result);
+        const totalPriceLine = this.getTotalPriceLine(receipt);
+        result += totalPriceLine;
+
+        return result;
+    }
+
+    getTotalPriceLine(receipt: Receipt): string {
         let pricePresentation = ReceiptPrinter.format2Decimals(receipt.getTotalPrice());
         let total = "Total: ";
         let whitespace = ReceiptPrinter.getWhitespace(this.columns - total.length - pricePresentation.length);
-        result += total;
-        result += whitespace;
-        result += pricePresentation;
-
-        return result;
+        return total + whitespace + pricePresentation;
     }
 
     addEndLine(result: string): string {
