@@ -48,7 +48,9 @@ describe('ShoppingCart', () => {
                 const cart = new ShoppingCart();
                 cart.addItemQuantity(apple, 1);
                 cart.addItemQuantity(wheat, 5);
-                cart.handleOffers(receipt, { [apple.name]: tenPercentDiscount, [wheat.name]: tenPercentDiscount }, catalog);
+                const tenPercentDiscountApple = new Offer(SpecialOfferType.TenPercentDiscount, apple, 10);
+                const tenPercentDiscountWheat = new Offer(SpecialOfferType.TenPercentDiscount, wheat, 10);
+                cart.handleOffers(receipt, { [apple.name]: tenPercentDiscountApple, [wheat.name]: tenPercentDiscountWheat }, catalog);
                 assert.equal(receipt.getDiscounts().length, 2);
                 assert.equal(receipt.getDiscounts()[0].discountAmount, 2);
                 assert.equal(receipt.getDiscounts()[1].discountAmount, 5);
@@ -298,6 +300,21 @@ describe('ShoppingCart', () => {
                 assert.equal(discounts[0].discountAmount, 2);
                 assert.equal(discounts[1].discountAmount, 10);
             });
+        });
+
+        describe('BundleDiscount', () => {
+            // Bundle: buy all products in bundle, get 10% off the bundle total
+            // Note: BundleDiscount needs a different Offer structure - array of products
+
+            it('should apply 10% discount when all bundle items are purchased');
+
+            it('should apply discount only once per complete bundle');
+
+            it('should apply discount multiple times for multiple complete bundles');
+
+            it('should not apply discount when bundle is incomplete');
+
+            it('should work with 3-product bundle');
         });
 
     });
