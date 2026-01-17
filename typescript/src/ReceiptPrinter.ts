@@ -16,7 +16,7 @@ export class ReceiptPrinter {
             let quantity = item.getFormatedQuantity();
             let unitPrice = item.getFormatedUnitPrice();
 
-            let whitespaceSize = this.columns - item.product.name.length - price.length;
+            let whitespaceSize = item.getWhitespaceSize(this.columns);
             let line = item.product.name + ReceiptPrinter.getWhitespace(whitespaceSize) + price + this.EOL;
 
             if (item.quantity != 1) {

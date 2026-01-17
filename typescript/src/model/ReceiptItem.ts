@@ -22,6 +22,10 @@ export class ReceiptItem {
         return this.format2Decimals(this.price);
     }
 
+    getWhitespaceSize(columns: number): number {
+        return columns - this.product.name.length - this.getFormatedTotalPrice().length;
+    }
+
     format2Decimals(number: number) {
         return new Intl.NumberFormat('en-UK', {
             minimumFractionDigits: 2,
