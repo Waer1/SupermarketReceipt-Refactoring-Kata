@@ -6,6 +6,7 @@ import {Discount} from "./Discount"
 import {Receipt} from "./Receipt"
 import {Offer} from "./Offer"
 import {SpecialOfferType} from "./SpecialOfferType"
+import { PricedProductQuantity } from "./PricedProductQuantity"
 
 type ProductQuantities = { [productName: string]: ProductQuantity }
 export type OffersByProduct = {[productName: string]: Offer};
@@ -51,10 +52,11 @@ export class ShoppingCart {
             const productQuantity = this._productQuantities[productName]
             const product = productQuantity.product;
             const quantity: number = this._productQuantities[productName].quantity;
+            const pricedProductQuantity = new PricedProductQuantity(productQuantity, catalog.getUnitPrice(product));
             if (offers[productName]) {
                 const offer : Offer = offers[productName];
                 
-                const discount = offer.getAvailableDiscount(quantity, product, catalog)
+                const discount = offer.getAvailableDiscount(quantity, product, catalog, pricedProductQuantity)
 
                 if (discount != null)
                     receipt.addDiscount(discount);

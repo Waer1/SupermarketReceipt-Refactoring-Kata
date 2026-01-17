@@ -1,4 +1,5 @@
 import { Discount } from "./Discount";
+import { PricedProductQuantity } from "./PricedProductQuantity";
 import { Product } from "./Product"
 import { SpecialOfferType } from "./SpecialOfferType"
 import { SupermarketCatalog } from "./SupermarketCatalog";
@@ -28,9 +29,9 @@ export class Offer {
         }
     }
 
-    
 
-    getAvailableDiscount(quantity: number, product: Product, catalog: SupermarketCatalog) {
+
+    getAvailableDiscount(quantity: number, product: Product, catalog: SupermarketCatalog, pricedProductQuantity: PricedProductQuantity) {
         const unitPrice: number = catalog.getUnitPrice(product);
         const x = this.getRequiredQuantityForDiscount();
         const numberOfXs = Math.floor(quantity / x);
